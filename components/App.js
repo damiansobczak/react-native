@@ -1,12 +1,13 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import React, { Component, StrictMode } from "react";
+import { StyleSheet, Text, View, Image, Alert, TouchableWithoutFeedback, TextInput } from "react-native";
 import Sumup from "./Sumup";
 import Item from "./Item";
 import Items from "../items";
 
 export default class App extends Component {
   state = {
-    items: Items
+    items: Items,
+    input: false
   };
 
   getActiveItems = () => {
@@ -19,21 +20,55 @@ export default class App extends Component {
     return counter;
   };
 
+  addItem = text => {
+    const items = this.state.items;
+    const date = Date.now();
+    if (text.trim() !== "") {
+      items.push({ id: date, name: `${text}`, image: null, status: "active" });
+      this.setState({ items });
+    }
+    this.toggleInput();
+  };
+
+  toggleInput = () => {
+    let input = this.state.input;
+    input = !input;
+    this.setState({ input });
+  };
+
+  checkItem = id => {
+    const items = this.state.items;
+    const itemIndex = items.findIndex(item => {
+      return item.id === id;
+    });
+    if (itemIndex !== undefined) {
+      items[itemIndex].status === "active" ? (items[itemIndex].status = "done") : (items[itemIndex].status = "active");
+      this.setState({ items });
+    }
+  };
+
   render() {
+    const sumupItems = this.getActiveItems();
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Image source={require("../assets/images/backgroundLarge.png")} style={styles.background} />
-          <Text style={styles.subtitle}>Zaczynajmy!</Text>
-          <Text style={styles.title}>Lista zakupów</Text>
-          <View style={styles.list}>
-            {this.state.items.map((item, index) => (
-              <Item name={item.name} image={item.image} status={item.status} key={index} />
-            ))}
+      <StrictMode>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Image source={require("../assets/images/backgroundLarge.png")} style={styles.background} />
+            <Text style={styles.subtitle}>Zaczynajmy!</Text>
+            <Text style={styles.title}>Lista zakupów</Text>
+            <View style={styles.list}>
+              {this.state.items.map((item, index) => (
+                <Item name={item.name} image={item.image} status={item.status} key={item.id} id={item.id} checkItem={this.checkItem} />
+              ))}
+              {this.state.input === true ? <TextInput editable={true} maxLength={80} placeholder="Dodaj" onSubmitEditing={event => this.addItem(event.nativeEvent.text)} /> : <View />}
+              <TouchableWithoutFeedback onPress={this.toggleInput}>
+                <View style={styles.touchableInput} />
+              </TouchableWithoutFeedback>
+            </View>
           </View>
+          <Sumup items={sumupItems} />
         </View>
-        <Sumup items={this.getActiveItems()} />
-      </View>
+      </StrictMode>
     );
   }
 }
@@ -65,6 +100,10 @@ const styles = StyleSheet.create({
   list: {
     width: 300,
     display: "flex",
-    marginTop: 32
+    marginTop: 32,
+    flex: 1
+  },
+  touchableInput: {
+    flex: 1
   }
 });

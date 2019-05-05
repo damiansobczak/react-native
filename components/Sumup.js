@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
+import PropTypes from "prop-types";
 
 export default class Sumup extends Component {
   render() {
@@ -11,6 +12,10 @@ export default class Sumup extends Component {
     );
   }
 }
+
+Sumup.propTypes = {
+  items: PropTypes.number.isRequired
+};
 
 const styles = StyleSheet.create({
   sumup: {

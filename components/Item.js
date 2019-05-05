@@ -1,16 +1,30 @@
 import React, { Component } from "react";
-import { Image, StyleSheet, View, Text } from "react-native";
+import { Image, StyleSheet, View, Text, TouchableWithoutFeedback, Alert } from "react-native";
+import PropTypes from "prop-types";
 
 export default class Item extends Component {
   render() {
     return (
-      <View style={styles.item}>
-        {this.props.status === "active" ? <Image source={require("../assets/images/icon-circle.png")} /> : <Image source={require("../assets/images/icon-circle-checked.png")} />}
-        <Text style={this.props.status === "active" ? styles.name : styles.nameIsDone}>{this.props.name}</Text>
-      </View>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          this.props.checkItem(this.props.id);
+        }}>
+        <View style={styles.item}>
+          {this.props.status === "active" ? <Image source={require("../assets/images/icon-circle.png")} /> : <Image source={require("../assets/images/icon-circle-checked.png")} />}
+          <Text style={this.props.status === "active" ? styles.name : styles.nameIsDone}>{this.props.name}</Text>
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
+
+Item.propTypes = {
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string,
+  status: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  checkItem: PropTypes.func.isRequired
+};
 
 const styles = StyleSheet.create({
   item: {
