@@ -7,7 +7,9 @@ export default class Sumup extends Component {
     return (
       <View style={styles.sumup}>
         <Text style={styles.title}>Do kupienia</Text>
-        <Text style={styles.counter}>{this.props.items} produkty</Text>
+        <Text style={styles.counter}>
+          {this.props.items} {this.props.items > 0 && this.props.items < 5 ? `produkty` : `produktów`}
+        </Text>
       </View>
     );
   }

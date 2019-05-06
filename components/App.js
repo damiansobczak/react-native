@@ -12,11 +12,11 @@ export default class App extends Component {
 
   getActiveItems = () => {
     let counter = 0;
-    const activeItems = this.state.items.forEach(item => {
-      if (item.status === "active") {
-        counter++;
-      }
-    });
+    if (this.state.items) {
+      const activeItems = this.state.items.forEach(item => {
+        item.status === "active" ? counter++ : counter;
+      });
+    }
     return counter;
   };
 
@@ -47,6 +47,11 @@ export default class App extends Component {
     }
   };
 
+  clearAllItems = () => {
+    const items = [];
+    this.setState({ items });
+  };
+
   render() {
     const sumupItems = this.getActiveItems();
     return (
@@ -57,15 +62,20 @@ export default class App extends Component {
             <Text style={styles.subtitle}>Zaczynajmy!</Text>
             <Text style={styles.title}>Lista zakupów</Text>
             <View style={styles.list}>
-              {this.state.items.map((item, index) => (
-                <Item name={item.name} image={item.image} status={item.status} key={item.id} id={item.id} checkItem={this.checkItem} />
-              ))}
+              {this.state.items.length > 0 ? this.state.items.map((item, index) => <Item name={item.name} image={item.image} status={item.status} key={item.id} id={item.id} checkItem={this.checkItem} />) : <Text style={styles.emptyList}>Lista jest pusta</Text>}
               {this.state.input === true ? <TextInput editable={true} maxLength={80} placeholder="Dodaj" onSubmitEditing={event => this.addItem(event.nativeEvent.text)} /> : <View />}
               <TouchableWithoutFeedback onPress={this.toggleInput}>
                 <View style={styles.touchableInput} />
               </TouchableWithoutFeedback>
             </View>
           </View>
+          {this.state.items.length > 0 ? (
+            <TouchableWithoutFeedback onPress={this.clearAllItems}>
+              <Text style={styles.clear}>Wyczyść wszystko</Text>
+            </TouchableWithoutFeedback>
+          ) : (
+            <View />
+          )}
           <Sumup items={sumupItems} />
         </View>
       </StrictMode>
@@ -97,6 +107,10 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold"
   },
+  clear: {
+    color: "#9FA2AA",
+    marginBottom: 16
+  },
   list: {
     width: 300,
     display: "flex",
@@ -105,5 +119,9 @@ const styles = StyleSheet.create({
   },
   touchableInput: {
     flex: 1
+  },
+  emptyList: {
+    paddingBottom: 8,
+    color: "#9FA2AA"
   }
 });

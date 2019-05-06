@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, StyleSheet, View, Text, TouchableWithoutFeedback, Alert } from "react-native";
+import { Image, StyleSheet, View, Text, TouchableWithoutFeedback } from "react-native";
 import PropTypes from "prop-types";
 
 export default class Item extends Component {
