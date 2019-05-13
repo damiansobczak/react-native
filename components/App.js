@@ -1,8 +1,10 @@
 import React, { Component, StrictMode } from "react";
-import { StyleSheet, Text, View, Image, Alert, TouchableWithoutFeedback, TextInput } from "react-native";
+import { StyleSheet, Text, View, TouchableWithoutFeedback, TextInput } from "react-native";
+import Header from "./Header";
 import Sumup from "./Sumup";
 import Item from "./Item";
 import Items from "../items";
+import ClearItems from "./ClearItems";
 
 export default class App extends Component {
   state = {
@@ -31,8 +33,7 @@ export default class App extends Component {
   };
 
   toggleInput = () => {
-    let input = this.state.input;
-    input = !input;
+    let input = !this.state.input;
     this.setState({ input });
   };
 
@@ -58,24 +59,16 @@ export default class App extends Component {
       <StrictMode>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Image source={require("../assets/images/backgroundLarge.png")} style={styles.background} />
-            <Text style={styles.subtitle}>Zaczynajmy!</Text>
-            <Text style={styles.title}>Lista zakupów</Text>
+            <Header title="Zaczynajmy!" subtitle="Lista zakupów" />
             <View style={styles.list}>
               {this.state.items.length > 0 ? this.state.items.map((item, index) => <Item name={item.name} image={item.image} status={item.status} key={item.id} id={item.id} checkItem={this.checkItem} />) : <Text style={styles.emptyList}>Lista jest pusta</Text>}
-              {this.state.input === true ? <TextInput editable={true} maxLength={80} placeholder="Dodaj" onSubmitEditing={event => this.addItem(event.nativeEvent.text)} /> : <View />}
+              {this.state.input === true ? <TextInput editable={true} maxLength={80} placeholder="Dodaj" onSubmitEditing={event => this.addItem(event.nativeEvent.text)} /> : <></>}
               <TouchableWithoutFeedback onPress={this.toggleInput}>
                 <View style={styles.touchableInput} />
               </TouchableWithoutFeedback>
             </View>
           </View>
-          {this.state.items.length > 0 ? (
-            <TouchableWithoutFeedback onPress={this.clearAllItems}>
-              <Text style={styles.clear}>Wyczyść wszystko</Text>
-            </TouchableWithoutFeedback>
-          ) : (
-            <View />
-          )}
+          {this.state.items.length > 0 ? <ClearItems clear={this.clearAllItems} /> : <></>}
           <Sumup items={sumupItems} />
         </View>
       </StrictMode>
@@ -95,21 +88,6 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     paddingTop: 40
-  },
-  background: {
-    display: "flex"
-  },
-  subtitle: {
-    color: "#9FA2AA",
-    fontSize: 18
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: "bold"
-  },
-  clear: {
-    color: "#9FA2AA",
-    marginBottom: 16
   },
   list: {
     width: 300,
