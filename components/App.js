@@ -62,7 +62,7 @@ export default class App extends Component {
             <Header title="Zaczynajmy!" subtitle="Lista zakupów" />
             <View style={styles.list}>
               {this.state.items.length > 0 ? this.state.items.map((item, index) => <Item name={item.name} image={item.image} status={item.status} key={item.id} id={item.id} checkItem={this.checkItem} />) : <Text style={styles.emptyList}>Lista jest pusta</Text>}
-              {this.state.input === true ? <TextInput editable={true} maxLength={80} placeholder="Dodaj" onSubmitEditing={event => this.addItem(event.nativeEvent.text)} autoFocus={true} /> : <></>}
+              {this.state.input === true ? <TextInput editable={true} maxLength={80} placeholder="Dodaj" onSubmitEditing={event => this.addItem(event.nativeEvent.text)} autoFocus={true} style={styles.input} /> : <></>}
               <TouchableWithoutFeedback onPress={this.toggleInput}>
                 <View style={styles.touchableInput} />
               </TouchableWithoutFeedback>
@@ -81,25 +81,28 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     alignItems: "center",
-    padding: 50
+    padding: 40
   },
   header: {
     flex: 1,
     display: "flex",
-    alignItems: "center",
-    paddingTop: 40
+    alignItems: "center"
   },
   list: {
-    width: 300,
+    width: 310,
     display: "flex",
     marginTop: 32,
     flex: 1
+  },
+  input: {
+    fontSize: 16
   },
   touchableInput: {
     flex: 1
   },
   emptyList: {
     paddingBottom: 8,
-    color: "#9FA2AA"
+    color: "#9FA2AA",
+    fontSize: 16
   }
 });

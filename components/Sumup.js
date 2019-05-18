@@ -6,7 +6,6 @@ export default class Sumup extends Component {
   render() {
     return (
       <View style={styles.sumup}>
-        <Text style={styles.title}>Do kupienia</Text>
         <Text style={styles.counter}>
           {this.props.items} {this.props.items > 0 && this.props.items < 5 ? `produkty` : `produktów`}
         </Text>
@@ -30,7 +29,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#343434",
-    marginBottom: 8
+    marginBottom: 8,
+    fontSize: 16
   },
   counter: {
     color: "#5C54FF",

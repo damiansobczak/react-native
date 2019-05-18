@@ -31,14 +31,16 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 16
+    marginBottom: 22
   },
   nameIsDone: {
     opacity: 0.5,
     marginLeft: 8,
+    fontSize: 16,
     textDecorationLine: "line-through"
   },
   name: {
-    marginLeft: 8
+    marginLeft: 8,
+    fontSize: 16
   }
 });

@@ -15,7 +15,8 @@ export default class ClearItems extends Component {
 const styles = StyleSheet.create({
   clear: {
     color: "#9FA2AA",
-    marginBottom: 16
+    marginBottom: 16,
+    fontSize: 16
   }
 });
 
