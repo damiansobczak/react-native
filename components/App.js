@@ -62,7 +62,7 @@ export default class App extends Component {
             <Header title="Zaczynajmy!" subtitle="Lista zakupów" />
             <View style={styles.list}>
               {this.state.items.length > 0 ? this.state.items.map((item, index) => <Item name={item.name} image={item.image} status={item.status} key={item.id} id={item.id} checkItem={this.checkItem} />) : <Text style={styles.emptyList}>Lista jest pusta</Text>}
-              {this.state.input === true ? <TextInput editable={true} maxLength={80} placeholder="Dodaj" onSubmitEditing={event => this.addItem(event.nativeEvent.text)} /> : <></>}
+              {this.state.input === true ? <TextInput editable={true} maxLength={80} placeholder="Dodaj" onSubmitEditing={event => this.addItem(event.nativeEvent.text)} autoFocus={true} /> : <></>}
               <TouchableWithoutFeedback onPress={this.toggleInput}>
                 <View style={styles.touchableInput} />
               </TouchableWithoutFeedback>
